@@ -56,11 +56,8 @@ if training_requested.lower() == 'y':
 # GAME 
 ranks = ["Lieutenant", "Captain", "Major", "General"]
 
-
-
 def begin(start = 0):
 	for i in range(start, len(ranks)):
-		user.rank = ranks[i]
 		level_score = 0
 		level_attempts = 0
 		level_rank = ranks[i]
@@ -77,15 +74,16 @@ def begin(start = 0):
 
 		accuracy = round(level_score/level_attempts, 3)*100
 
-		print("{} {}".format("Results for", user.name))
+		print("{} {} {}".format("Results for", user.rank, user.name))
 		print("{} {}".format("Your Score:", str(level_score)))
 		print("{} {}".format("Attempts:", str(level_attempts)))
 		print("{} {} {}".format("Efficiency:", str(accuracy), "%"))
 		
-		if accuracy > 75 and level_attempts > 40:
+		if accuracy > 75 and level_attempts > 45:
 			if user.rank == "General":
 				print("You Won!")
 				return
+			user.rank = ranks[i]
 			print("{} {}{}".format("You've been promoted to ", ranks[i+1],"."))
 			input('press enter to continue')
 		else:
