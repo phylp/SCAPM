@@ -7,9 +7,7 @@ from models.level import Level
 
 #resources
 title = open('./resources/title.txt').read()
-welcome = open('./resources/welcome.txt').read()
 training = open('./resources/training.txt').read()
-# bindings = open('./resources/bindings.txt').read()
 
 # LOAD 
 counter = 25
@@ -33,13 +31,13 @@ Game Options
 1. Use default name
 2. Use custom name
 		""")
-	answer = int(input("Please select your desired game mode\n"))
-	if answer == 1:
+	answer = input("Please select your desired game mode\n")
+	if answer == "1":
 		user = Player()
 		waiting = False
 		console.clear(.5)
-	elif answer == 2:
-		custom_name = str(input("\n Please enter your name. \n"))
+	elif answer == "2":
+		custom_name = input("\n Please enter your name. \n")
 		user = Player(custom_name)
 		waiting = False
 		console.clear(.5)
@@ -56,23 +54,45 @@ if training_requested.lower() == 'y':
 
 
 # GAME 
-#wrap this in a loop to change levels
+ranks = ["Lieutenant", "Captain", "Major", "General"]
 
-level_score = 0
-level_attempts = 0
-level_rank = user.rank
-level = Level(level_rank)
-start = time.time()
 
-while(time.time() - start < 30):
-	level.read()
-	key = console.getch()
-	if key == level.key:
-		level_score += 1
-	level_attempts += 1
-	level.restart()
 
-print("{} {}".format("Your Score:", str(level_score)))
-print("{} {}".format("Attempts:", str(level_attempts)))
-print("{} {} {}".format("Efficiency:", str(round(level_score/level_attempts, 3)), "%"))
+def begin(start = 0):
+	for i in range(start, len(ranks)):
+		user.rank = ranks[i]
+		level_score = 0
+		level_attempts = 0
+		level_rank = ranks[i]
+		level = Level(level_rank)
+		start = time.time()
+
+		while(time.time() - start < 60):
+			level.read()
+			key = console.getch()
+			if key == level.key:
+				level_score += 1
+			level_attempts += 1
+			level.restart()
+
+		accuracy = round(level_score/level_attempts, 3)*100
+
+		print("{} {}".format("Results for", user.name))
+		print("{} {}".format("Your Score:", str(level_score)))
+		print("{} {}".format("Attempts:", str(level_attempts)))
+		print("{} {} {}".format("Efficiency:", str(accuracy), "%"))
+		
+		if accuracy > 75 and level_attempts > 40:
+			if user.rank == "General":
+				print("You Won!")
+				return
+			print("{} {}{}".format("You've been promoted to ", ranks[i+1],"."))
+			input('press enter to continue')
+		else:
+			desire = input("retry? Y/N\n")
+			if desire.lower() == "y":
+				begin(i)
+			else:
+				sys.exit();
+begin()
 	

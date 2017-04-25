@@ -1,1 +1,12 @@
-This is the training text.
+
+
+General Overview: 
+SCAPM is a console based game in which you play the role of a lieutenant of the Confederacy of Man in the StarCraft universe. Using default key bindings from Brood War, you create various Terran units. After demonstrating proficiency within your rank, you gain rank and are given control of more units and technologies within the Terran arsenal.
+
+Instructions:
+For each level a unit or structure will be displayed which you have to match with the correct hotkey. You only get one chance to enter the correct hotkey for the given unit/structure. 
+
+After one minute your total number of attempts and overall accuracy will be calculated. You must attempt at least 45 hotkeys with an accuracy no less than 75% in order to gain promotion. 
+
+Good luck! 
+
